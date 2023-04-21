@@ -1,0 +1,16 @@
+{
+  "name": "xdloc/chopshop",
+  "description": "Chop Shop",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "xdloc",
+      "email": "xxdloc@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "ext-pdo": "*"
+  }
+}
