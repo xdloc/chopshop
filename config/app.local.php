@@ -2,6 +2,8 @@
 return [
     //todo get it from .env via env (like in laravel)
     'APP_ROOT' => 'http://localhost/public',
+    'APP_DEBUG' => true,
+
     'DB_CONNECTION' => 'sqlite',
     'DB_NAME' => '../db/db.sqlite',
     'DB_HOST' => '',

@@ -9,8 +9,8 @@ namespace App\Framework;
  */
 class App
 {
-    private $controller = 'List';
-    private $method = 'index';
+    private string $controller = 'List';
+    private string $method = 'index';
 
     /**
      * @return false|string[]

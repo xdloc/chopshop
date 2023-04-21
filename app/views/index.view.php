@@ -18,8 +18,6 @@
             <h3 class="float-md-start mb-0">ChopShop</h3>
             <nav class="nav nav-masthead justify-content-center float-md-end">
                 <a class="nav-link active" aria-current="page" href="<?= APP_ROOT ?>">Home</a>
-                <a class="nav-link" href="<?= APP_ROOT ?>/login">Login</a>
-                <a class="nav-link" href="<?= APP_ROOT ?>/logout">Logout</a>
             </nav>
         </div>
     </header>
