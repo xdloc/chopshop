@@ -2,9 +2,9 @@
 
 session_start();
 
-require "../app/framework/init.php";
+require "../app/Framework/init.php";
 
 DEBUG ? ini_set('display_errors', 1) : ini_set('display_errors', 0);
 
-$app = new App;
+$app = new \App\Framework\App();
 $app->loadController();

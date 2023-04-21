@@ -14,7 +14,7 @@ trait Database
     /**
      * @return PDO
      */
-    private function connect()
+    private function connect(): PDO
     {
         $string = "mysql:hostname=".DB_HOST.";dbname=".DB_NAME;
         return new PDO($string, DB_USER, DB_PASS);
@@ -25,7 +25,7 @@ trait Database
      * @param  array  $data
      * @return array|bool
      */
-    public function query($query, $data = [])
+    public function query($query, array $data = []): bool|array
     {
 
         $con = $this->connect();
@@ -47,7 +47,7 @@ trait Database
      * @param  array  $data
      * @return bool|mixed
      */
-    public function getRow($query, $data = [])
+    public function getRow($query, array $data = []): mixed
     {
 
         $con = $this->connect();

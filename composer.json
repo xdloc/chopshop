@@ -10,7 +10,22 @@
     }
   ],
   "require": {
-    "php": "^8.2",
-    "ext-pdo": "*"
+    "php": "^8.0",
+    "ext-pdo": "*",
+    "guzzle/guzzle": "^3.9",
+    "sentry/sdk": "^3.3"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app"
+    }
   }
 }

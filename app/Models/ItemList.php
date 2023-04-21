@@ -19,5 +19,4 @@ use App\Framework\Model;
 class ItemList
 {
     use Model;
-
 }

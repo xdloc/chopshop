@@ -20,7 +20,7 @@ trait Model
     /**
      * @return array|bool
      */
-    public function findAll()
+    public function findAll(): bool|array
     {
 
         $query = "select * from $this->table order by $this->orderColumn $this->orderType limit $this->limit offset $this->offset";
@@ -33,21 +33,9 @@ trait Model
      * @param  array  $data_not
      * @return array|bool
      */
-    public function where($data, $data_not = [])
+    public function where($data, array $data_not = []): bool|array
     {
-        $keys = array_keys($data);
-        $keys_not = array_keys($data_not);
-        $query = "select * from $this->table where ";
-
-        foreach ($keys as $key) {
-            $query .= $key." = :".$key." && ";
-        }
-
-        foreach ($keys_not as $key) {
-            $query .= $key." != :".$key." && ";
-        }
-
-        $query = trim($query, " && ");
+        $query = $this->getStr($data, $data_not);
 
         $query .= " order by $this->orderColumn $this->orderType limit $this->limit offset $this->offset";
         $data = array_merge($data, $data_not);
@@ -60,21 +48,9 @@ trait Model
      * @param  array  $data_not
      * @return bool|mixed
      */
-    public function first($data, $data_not = [])
+    public function first($data, array $data_not = []): mixed
     {
-        $keys = array_keys($data);
-        $keys_not = array_keys($data_not);
-        $query = "select * from $this->table where ";
-
-        foreach ($keys as $key) {
-            $query .= $key." = :".$key." && ";
-        }
-
-        foreach ($keys_not as $key) {
-            $query .= $key." != :".$key." && ";
-        }
-
-        $query = trim($query, " && ");
+        $query = $this->getStr($data, $data_not);
 
         $query .= " limit $this->limit offset $this->offset";
         $data = array_merge($data, $data_not);
@@ -96,7 +72,7 @@ trait Model
         if (!empty($this->allowedColumns)) {
             foreach ($data as $key => $value) {
 
-                if (!in_array($key, $this->allowedColumns)) {
+                if (!in_array($key, $this->allowedColumns, true)) {
                     unset($data[$key]);
                 }
             }
@@ -116,12 +92,12 @@ trait Model
      * @param  string  $id_column
      * @return bool
      */
-    public function update($id, $data, $id_column = 'id'): bool
+    public function update($id, $data, string $id_column = 'id'): bool
     {
         if (!empty($this->allowedColumns)) {
             foreach ($data as $key => $value) {
 
-                if (!in_array($key, $this->allowedColumns)) {
+                if (!in_array($key, $this->allowedColumns, true)) {
                     unset($data[$key]);
                 }
             }
@@ -150,7 +126,7 @@ trait Model
      * @param  string  $id_column
      * @return bool
      */
-    public function delete($id, $id_column = 'id'): bool
+    public function delete($id, string $id_column = 'id'): bool
     {
 
         $data[$id_column] = $id;
@@ -159,6 +135,28 @@ trait Model
 
         return false;
 
+    }
+
+    /**
+     * @param $data
+     * @param  array  $data_not
+     * @return string
+     */
+    protected function getStr($data, array $data_not): string
+    {
+        $keys = array_keys($data);
+        $keys_not = array_keys($data_not);
+        $query = "select * from $this->table where ";
+
+        foreach ($keys as $key) {
+            $query .= $key." = :".$key." && ";
+        }
+
+        foreach ($keys_not as $key) {
+            $query .= $key." != :".$key." && ";
+        }
+
+        return trim($query, " && ");
     }
 
 
