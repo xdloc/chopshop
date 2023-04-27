@@ -1,6 +1,6 @@
 {
   "name": "xdloc/chopshop",
-  "description": "Chop Shop",
+  "description": "Chop Shop API",
   "minimum-stability": "stable",
   "license": "proprietary",
   "authors": [

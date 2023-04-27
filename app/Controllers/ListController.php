@@ -15,23 +15,19 @@ class ListController
 {
     use Controller;
 
-    public function index(): void
-    {
-        $this->view('index');
-    }
-
+    /**
+     * @api /method?=list/list
+     *
+     * @return bool|array
+     */
     public function list(): bool|array
     {
-        /*$listId = 1; //todo one list for now
-        $items = [
-            (new ItemBuilder())->createItem($listId, 'Feathers of Dust'),
-            (new ItemBuilder())->createItem($listId, 'Gloves of Infinite Fingers'),
-            (new ItemBuilder())->createItem($listId, 'Broken bottle'),
-        ];*/
         return (new ItemBuilder())->findAll();
     }
 
     /**
+     * @api /method?=list/addItem
+     *
      * @param  int  $listId
      * @param  string  $itemName
      * @return bool
@@ -43,6 +39,8 @@ class ListController
     }
 
     /**
+     * @api /method?=list/removeItem
+     *
      * @param  int  $listId
      * @param  int  $itemId
      * @return bool
@@ -54,6 +52,9 @@ class ListController
     }
 
     /**
+     * Edit item's name
+     * @api /method?=list/editItem
+     *
      * @param  int  $listId
      * @param  int  $itemId
      * @param  string  $itemName
@@ -66,6 +67,9 @@ class ListController
     }
 
     /**
+     * Mark as completed or unmark it back
+     * @api /method?=list/markItem
+     *
      * @param  int  $listId
      * @param  int  $itemId
      * @param  int  $status

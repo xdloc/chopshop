@@ -80,8 +80,7 @@ class App
             throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$controller);
         }
 
-        header("Content-Type: application/json");
-        header('Access-Control-Allow-Origin: *');
+        $this->returnHeaders();
         print json_encode($load, JSON_THROW_ON_ERROR);
     }
 
@@ -92,6 +91,15 @@ class App
     protected function isControllerExist(string $controller): bool
     {
         return file_exists('../app/Controllers/'.ucfirst($controller).'.php');
+    }
+
+    /**
+     * @return void
+     */
+    protected function returnHeaders(): void
+    {
+        header("Content-Type: application/json");
+        header('Access-Control-Allow-Origin: *');
     }
 
 }
