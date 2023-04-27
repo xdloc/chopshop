@@ -71,6 +71,7 @@ class App
         $controller = new $this->controller;
 
         if (!empty($method) && method_exists($controller, $method)) {
+            print $method.' '.$controller;
             $this->method = $method;
         }
 
