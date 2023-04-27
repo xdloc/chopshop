@@ -1,6 +1,7 @@
 <?php
 return [
     //todo get it from .env via env (like in laravel)
+    'APP_NAME' => 'ChopShop',
     'APP_ROOT' => 'http://localhost/public',
     'APP_DEBUG' => true,
 
