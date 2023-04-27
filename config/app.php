@@ -2,14 +2,14 @@
 return [
     //todo get it from .env via env (like in laravel)
     'APP_NAME' => 'ChopShop',
-    'APP_ROOT' => 'http://localhost/public',
+    'APP_ROOT' => 'https://siberia.vps.webdock.cloud',
     'APP_DEBUG' => true,
 
-    'DB_CONNECTION' => 'sqlite',
-    'DB_NAME' => '',
-    'DB_HOST' => '',
-    'DB_USER' => '',
-    'DB_PASSWORD' => '',
+    'DB_CONNECTION' => 'mysql',
+    'DB_NAME' => 'siberia',
+    'DB_HOST' => 'localhost',
+    'DB_USER' => 'siberia',
+    'DB_PASSWORD' => 'XzGGyJeWH332',
 
     'DB_TIME_FORMAT' => 'Y.m.d H:i:s',
 
