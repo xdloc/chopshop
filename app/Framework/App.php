@@ -25,7 +25,7 @@ class App
      */
     private function getUrl(): array
     {
-        if(!empty($this->url)){
+        if (!empty($this->url)) {
             return $this->url;
         }
         $url = $_GET['method'] ?? 'Undefined';
@@ -47,7 +47,7 @@ class App
      */
     private function getMethodName(): string
     {
-        if(!isset($this->getUrl()[1])){
+        if (!isset($this->getUrl()[1])) {
             throw new MethodNotFoundException('Method "'.$this->getUrl()[1].'" not found in '.$this->getControllerName(), 404);
         }
         return $this->getUrl()[1];
@@ -71,11 +71,14 @@ class App
         $controller = new $this->controller;
 
         if (!empty($method) && method_exists($controller, $method)) {
-            print $method.' '.$controller;
+            print $method.' '.$this->getControllerName();
             $this->method = $method;
         }
 
-        call_user_func_array([$controller, $this->method], $this->getUrl());
+        $load = call_user_func_array([$controller, $this->method], $this->getUrl());
+        if ($load === false) {
+            throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$controller);
+        }
     }
 
     /**
