@@ -12,7 +12,6 @@
   "require": {
     "php": "^8.0",
     "ext-pdo": "*",
-    "guzzle/guzzle": "^3.9",
     "sentry/sdk": "^3.3"
   },
   "require-dev": {
