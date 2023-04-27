@@ -81,7 +81,7 @@ class App
         }
 
         header("Content-Type: application/json");
-        return json_encode($load, JSON_THROW_ON_ERROR);
+        print json_encode($load, JSON_THROW_ON_ERROR);
     }
 
     /**
