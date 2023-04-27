@@ -35,5 +35,5 @@ function esc($str): string
 
 //todo
 function config(string $var, string $default = ''){
-    return require CONFIG['var'];
+    return require CONFIG[$var];
 }
