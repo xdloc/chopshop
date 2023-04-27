@@ -11,16 +11,16 @@ jobs:
       - name: CD
         run: cd /var/www/html/
       - name: Git Reset
-        run: git reset --hard origin/master
+        run: cd /var/www/html/ | git reset --hard origin/master
 
       - name: Git Pull
-        run: git pull origin master
+        run: cd /var/www/html/ | git pull origin master
 
       - name: Validate
-        run: composer validate --strict
+        run: cd /var/www/html/ | composer validate --strict
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader
+        run: cd /var/www/html/ | composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader
 
       - name: Deploy
         uses: deployphp/action@v1
