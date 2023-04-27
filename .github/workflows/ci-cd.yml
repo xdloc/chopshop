@@ -8,22 +8,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: CD
-        run: cd /var/www/html/
-      - name: Git Reset
-        run: cd /var/www/html/ | git reset --hard origin/master
-
-      - name: Git Pull
-        run: cd /var/www/html/ | git pull origin master
-
-      - name: Validate
-        run: cd /var/www/html/ | composer validate --strict
-
-      - name: Install dependencies
-        run: cd /var/www/html/ | composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader
-
       - name: Deploy
         uses: deployphp/action@v1
         with:
           dep: deploy
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/html/
+            git reset --hard origin/master
+            git pull origin master
+            composer validate --strict
+            composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader
+            
