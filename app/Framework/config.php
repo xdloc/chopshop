@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 //you can add more config files here
 if ($_SERVER['SERVER_NAME'] === 'localhost') {
-    $config = require __DIR__.'../../config/app.local.php';
+    $config = require dirname(__DIR__, 2).'/config/app.local.php';
 } else {
-    $config = require __DIR__.'../../config/app.php';
+    $config = require dirname(__DIR__, 2).'/config/app.php';
 }
 define('CONFIG',$config);
 /*foreach($config as $var => $value){
