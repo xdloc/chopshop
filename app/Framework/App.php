@@ -48,6 +48,9 @@ class App
         return $this->getUrl()[1];
     }
 
+    /**
+     * @return void
+     */
     public function loadController(): void
     {
         $controller = $this->getControllerName();
