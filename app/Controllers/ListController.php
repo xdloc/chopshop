@@ -17,7 +17,7 @@ class ListController
 
     public function index(): void
     {
-        $this->view('index', ['a' => 415236136]);
+        $this->view('index');
     }
 
     /**
