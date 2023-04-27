@@ -81,6 +81,7 @@ class App
         }
 
         header("Content-Type: application/json");
+        header('Access-Control-Allow-Origin: *');
         print json_encode($load, JSON_THROW_ON_ERROR);
     }
 
