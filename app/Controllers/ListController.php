@@ -25,7 +25,13 @@ class ListController
      */
     public function list(): bool|string
     {
-        return json_encode(['123' => 456], JSON_THROW_ON_ERROR);
+        $listId = 1; //todo one list for now
+        $items = [
+            (new ItemBuilder())->createItem($listId, 'Feathers of Dust'),
+            (new ItemBuilder())->createItem($listId, 'Gloves of Infinite Fingers'),
+            (new ItemBuilder())->createItem($listId, 'Broken bottle'),
+        ];
+        return json_encode($items, JSON_THROW_ON_ERROR);
     }
 
     /**

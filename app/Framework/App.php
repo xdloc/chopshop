@@ -54,10 +54,10 @@ class App
     }
 
     /**
-     * @return void
+     * @return mixed
      * @throws MethodNotFoundException
      */
-    public function loadController(): void
+    public function loadController(): mixed
     {
         $controller = $this->getControllerName();
         $method = $this->getMethodName();
@@ -71,7 +71,6 @@ class App
         $controller = new $this->controller;
 
         if (!empty($method) && method_exists($controller, $method)) {
-            print $method.' '.$this->getControllerName();
             $this->method = $method;
         }
 
@@ -79,6 +78,8 @@ class App
         if ($load === false) {
             throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$controller);
         }
+
+        return $load;
     }
 
     /**
