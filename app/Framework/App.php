@@ -54,11 +54,11 @@ class App
     }
 
     /**
-     * @return mixed
+     * @return void
      * @throws MethodNotFoundException
      * @throws \JsonException
      */
-    public function loadController(): mixed
+    public function loadController(): void
     {
         $controller = $this->getControllerName();
         $method = $this->getMethodName();
