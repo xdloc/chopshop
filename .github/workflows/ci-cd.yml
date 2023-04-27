@@ -1,0 +1,26 @@
+name: CI/CD
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          script: |
+            cd /var/www/html/
+            git reset --hard origin/master
+            git pull origin master
+            composer validate --strict
+            composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader
+            php artisan migrate --force
+
