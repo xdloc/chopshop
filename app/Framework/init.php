@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 
 require 'config.php';
-\Sentry\init(['dsn' => config('SENTRY_URL')]);
 require 'functions.php';
+\Sentry\init(['dsn' => config('SENTRY_URL')]);
 
 /*require 'Database.php';
 require 'Model.php';
