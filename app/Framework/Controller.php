@@ -20,9 +20,9 @@ trait Controller
         if (!file_exists($filename)) {
             $filename = "../app/Views/404.view.php";
         }
-        require '../app/Views/header.view.php';
+        //require '../app/Views/header.view.php';
         require $filename;
-        require '../app/Views/header.view.php';
+        //require '../app/Views/header.view.php';
 
     }
 }
