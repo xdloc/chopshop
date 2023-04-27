@@ -56,6 +56,7 @@ class App
     /**
      * @return mixed
      * @throws MethodNotFoundException
+     * @throws \JsonException
      */
     public function loadController(): mixed
     {
@@ -80,7 +81,7 @@ class App
         }
 
         header("Content-Type: application/json");
-        return $load;
+        return json_encode($load, JSON_THROW_ON_ERROR);
     }
 
     /**

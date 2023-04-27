@@ -20,10 +20,7 @@ class ListController
         $this->view('index');
     }
 
-    /**
-     * @throws \JsonException
-     */
-    public function list(): bool|string
+    public function list(): bool|array
     {
         /*$listId = 1; //todo one list for now
         $items = [
@@ -31,8 +28,7 @@ class ListController
             (new ItemBuilder())->createItem($listId, 'Gloves of Infinite Fingers'),
             (new ItemBuilder())->createItem($listId, 'Broken bottle'),
         ];*/
-        $items = (new ItemBuilder())->findAll();
-        return json_encode($items, JSON_THROW_ON_ERROR);
+        return (new ItemBuilder())->findAll();
     }
 
     /**
