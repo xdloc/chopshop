@@ -37,4 +37,12 @@ class ItemBuilder
     {
         return $this->item;
     }
+
+    /**
+     * @return bool|array
+     */
+    public function findAll(): bool|array
+    {
+        return (new Item())->findAll();
+    }
 }

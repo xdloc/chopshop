@@ -79,6 +79,7 @@ class App
             throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$controller);
         }
 
+        header("Content-Type: application/json");
         return $load;
     }
 

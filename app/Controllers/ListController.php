@@ -25,12 +25,13 @@ class ListController
      */
     public function list(): bool|string
     {
-        $listId = 1; //todo one list for now
+        /*$listId = 1; //todo one list for now
         $items = [
             (new ItemBuilder())->createItem($listId, 'Feathers of Dust'),
             (new ItemBuilder())->createItem($listId, 'Gloves of Infinite Fingers'),
             (new ItemBuilder())->createItem($listId, 'Broken bottle'),
-        ];
+        ];*/
+        $items = (new ItemBuilder())->findAll();
         return json_encode($items, JSON_THROW_ON_ERROR);
     }
 
