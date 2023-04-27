@@ -33,7 +33,3 @@ function esc($str): string
 	die;
 }
 
-//todo
-function config(string $var, string $default = ''){
-    return require CONFIG[$var];
-}

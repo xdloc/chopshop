@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Framework;
 
 use App\Controllers\NotFoundController;
+use App\Exceptions\MethodNotFoundException;
 
 /**
  * Class App
@@ -27,7 +28,7 @@ class App
         if(!empty($this->url)){
             return $this->url;
         }
-        $url = $_GET['url'] ?? '';
+        $url = $_GET['method'] ?? 'Undefined';
         $this->url = explode('/', trim($url, '/'));
         return $this->url;
     }
@@ -37,19 +38,24 @@ class App
      */
     private function getControllerName(): string
     {
-        return ucfirst($this->getUrl()[0]);
+        return ucfirst($this->getUrl()[0]).'Controller';
     }
 
     /**
      * @return string
+     * @throws MethodNotFoundException
      */
     private function getMethodName(): string
     {
+        if(!isset($this->getUrl()[1])){
+            throw new MethodNotFoundException('Method "'.$this->getUrl()[1].'" not found in '.$this->getControllerName(), 404);
+        }
         return $this->getUrl()[1];
     }
 
     /**
      * @return void
+     * @throws MethodNotFoundException
      */
     public function loadController(): void
     {
@@ -64,7 +70,7 @@ class App
 
         $controller = new $this->controller;
 
-        if (!empty($URL[1]) && method_exists($controller, $method)) {
+        if (!empty($method) && method_exists($controller, $method)) {
             $this->method = $method;
         }
 

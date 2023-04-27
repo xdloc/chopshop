@@ -21,6 +21,14 @@ class ListController
     }
 
     /**
+     * @throws \JsonException
+     */
+    public function list(): bool|string
+    {
+        return json_encode(['123' => 456], JSON_THROW_ON_ERROR);
+    }
+
+    /**
      * @param  int  $listId
      * @param  string  $itemName
      * @return bool
