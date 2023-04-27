@@ -6,9 +6,9 @@ return [
     'APP_DEBUG' => true,
 
     'DB_CONNECTION' => 'mysql',
-    'DB_NAME' => 'siberia',
+    'DB_NAME' => 'siberia_remote',
     'DB_HOST' => 'localhost',
-    'DB_USER' => 'siberia',
+    'DB_USER' => 'siberia_remote',
     'DB_PASSWORD' => 'XzGGyJeWH332',
 
     'DB_TIME_FORMAT' => 'Y.m.d H:i:s',
