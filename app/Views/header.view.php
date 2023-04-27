@@ -26,4 +26,4 @@
 
     <main class="px-3">
         <h1>Chopshop</h1>
-        <h2>Here is your list</h2>
+        <h2>Here is your shopping list</h2>
