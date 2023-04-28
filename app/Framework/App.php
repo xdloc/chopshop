@@ -8,7 +8,6 @@ use App\Exceptions\ApiException;
 use App\Exceptions\MethodNotFoundException;
 use ArgumentCountError;
 use Exception;
-use http\Exception\InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use JsonException;
@@ -19,6 +18,7 @@ use JsonException;
  */
 class App
 {
+    private const CONTROLLER_NAMESPACE = 'App\Controllers\'';
     private string $controller = '';
     private string $method = '';
 
@@ -34,16 +34,16 @@ class App
      */
     public function loadController(): void
     {
-        $controller = $this->getControllerName();
-        $method = $this->getMethodName();
 
+        $controller = $this->getControllerName();
         if ($this->isControllerExist($controller)) {
-            $this->controller = 'App\Controllers\\'.$controller;
+            $this->controller = self::CONTROLLER_NAMESPACE.$controller;
         } else {
             $this->controller = NotFoundController::class;
         }
 
         $controller = new $this->controller;
+        $method = $this->getMethodName();
 
         if (!empty($method) && method_exists($controller, $method)) {
             $this->method = $method;
@@ -54,7 +54,7 @@ class App
             $reflection = new \ReflectionMethod($controller,$this->method);
             $methodParamsNumber = $reflection->getNumberOfRequiredParameters();
             if($methodParamsNumber !== count($this->getParams())){
-                throw new InvalidArgumentException('Wrong argument number for method '.$this->method.' in '.$this->getControllerName());
+                throw new ArgumentCountError('Wrong argument number for method '.$this->method.' in '.$this->getControllerName());
             }
 
             $load = call_user_func_array([$controller, $this->method], $this->getParams());
