@@ -51,16 +51,13 @@ class App
 
         $exitCode = 200;
         try {
-            $reflection = new \ReflectionMethod($this->getControllerName(),$this->method);
+            $reflection = new \ReflectionMethod($controller,$this->method);
             $methodParamsNumber = $reflection->getNumberOfRequiredParameters();
             if($methodParamsNumber !== count($this->getParams())){
                 throw new InvalidArgumentException('Wrong argument number for method '.$this->method.' in '.$this->getControllerName());
             }
 
             $load = call_user_func_array([$controller, $this->method], $this->getParams());
-            /*if ($load === false) {
-                throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$this->getControllerName());
-            }*/
         }
         catch (Exception $exception) {
             $apiException = $this->getApiException($exception);
