@@ -4,7 +4,10 @@ declare(strict_types=1);
 namespace App\Framework;
 
 use App\Controllers\NotFoundController;
+use App\Exceptions\ApiException;
 use App\Exceptions\MethodNotFoundException;
+use Exception;
+use JsonException;
 
 /**
  * Class App
@@ -19,6 +22,44 @@ class App
      * @var string[]
      */
     private array $url = [];
+
+    /**
+     * @return void
+     * @throws MethodNotFoundException
+     * @throws JsonException
+     */
+    public function loadController(): void
+    {
+        $controller = $this->getControllerName();
+        $method = $this->getMethodName();
+
+        if ($this->isControllerExist($controller)) {
+            $this->controller = 'App\Controllers\\'.$controller;
+        } else {
+            $this->controller = NotFoundController::class;
+        }
+
+        $controller = new $this->controller;
+
+        if (!empty($method) && method_exists($controller, $method)) {
+            $this->method = $method;
+        }
+
+        $exitCode = 200;
+        try {
+            $load = call_user_func_array([$controller, $this->method], $this->getUrl());
+            if ($load === false) {
+                throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$controller);
+            }
+        } catch (Exception $exception) {
+            $apiException = $this->getApiException($exception);
+            $load = $this->getExceptionArray($apiException);
+            $exitCode = $apiException->getCode();
+        }
+        $this->returnHeaders();
+        print json_encode($load, JSON_THROW_ON_ERROR);
+        exit($exitCode);
+    }
 
     /**
      * @return string[]
@@ -54,38 +95,6 @@ class App
     }
 
     /**
-     * @return void
-     * @throws MethodNotFoundException
-     * @throws \JsonException
-     */
-    public function loadController(): void
-    {
-        $controller = $this->getControllerName();
-        $method = $this->getMethodName();
-
-        if ($this->isControllerExist($controller)) {
-            $this->controller = 'App\Controllers\\'.$controller;
-        } else {
-            $this->controller = NotFoundController::class;
-        }
-
-        $controller = new $this->controller;
-
-        if (!empty($method) && method_exists($controller, $method)) {
-            $this->method = $method;
-        }
-
-        $load = call_user_func_array([$controller, $this->method], $this->getUrl());
-        if ($load === false) {
-            throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$controller);
-        }
-
-        $this->returnHeaders();
-        print json_encode($load, JSON_THROW_ON_ERROR);
-        exit();
-    }
-
-    /**
      * @param  string  $controller
      * @return bool
      */
@@ -115,6 +124,35 @@ class App
         return $_GET['method'];
     }
 
+    /**
+     * @param  Exception  $exception
+     * @return ApiException
+     */
+    protected function getApiException(Exception $exception): ApiException
+    {
+        if (DEBUG) {
+            $apiException = new ApiException($exception->getMessage(), 500, $exception);
+        } else {
+            $apiException = new ApiException('Failed', 500);
+        }
+        return $apiException;
+    }
+
+    /**
+     * @param  Exception  $exception
+     * @return array[]
+     */
+    protected function getExceptionArray(Exception $exception): array
+    {
+        return [
+            'exception' => [
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'object' => $exception,
+                'trace' => $exception->getTraceAsString()
+            ]
+        ];
+    }
 }
 
 
