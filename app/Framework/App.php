@@ -47,7 +47,7 @@ class App
             $reflection = new \ReflectionMethod($controller, $this->method);
             $methodParamsNumber = $reflection->getNumberOfRequiredParameters();
             if ($methodParamsNumber !== count($this->getParams())) {
-                throw new ArgumentCountError('Wrong argument number for method '.$this->method.' in '.$this->getControllerName());
+                throw new ArgumentCountError('Wrong argument number for method "'.$this->method.'" in '.$this->getControllerName());
             }
             $load = call_user_func_array([$controller, $this->method], array_values($this->getParams()));
         } catch (Exception $exception) {

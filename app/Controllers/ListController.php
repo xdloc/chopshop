@@ -62,12 +62,12 @@ class ListController
     /**
      * Mark as completed or unmark it back
      * @param  string  $itemId
-     * @param  int  $status
+     * @param  string  $status
      * @return bool
      * @api /method?=list/mark
      */
-    public function mark(string $itemId, int $status): bool
+    public function mark(string $itemId, string $status): bool
     {
-        return (new Item())->update((int)$itemId, ['status' => $status]);
+        return (new Item())->update((int)$itemId, ['status' => (int)$status]);
     }
 }
