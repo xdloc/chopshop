@@ -38,7 +38,7 @@ class App
         $method = $this->getMethodName();
 
         if ($this->isControllerExist($controller)) {
-            $this->controller = self::CONTROLLER_NAMESPACE.$this->getControllerName();
+            $this->controller = 'App\Controllers\\'.$controller;
         } else {
             $this->controller = NotFoundController::class;
         }
