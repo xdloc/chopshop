@@ -41,29 +41,6 @@ trait Database
 
         return false;
     }
-
-    /**
-     * @param $query
-     * @param  array  $data
-     * @return bool|mixed
-     */
-    public function getRow($query, array $data = []): mixed
-    {
-
-        $con = $this->connect();
-        $stm = $con->prepare($query);
-
-        $check = $stm->execute($data);
-        if ($check) {
-            $result = $stm->fetchAll(PDO::FETCH_OBJ);
-            if (is_array($result) && count($result)) {
-                return $result[0];
-            }
-        }
-
-        return false;
-    }
-
 }
 
 

@@ -126,6 +126,7 @@ trait Model
     {
         $data[$id_column] = $id;
         $query = "delete from $this->table where $id_column = :$id_column ";
+        var_dump($query);
         $queryResult = $this->query($query, $data);
         return (bool)$queryResult;
     }
