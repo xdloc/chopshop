@@ -98,8 +98,10 @@ class App
      */
     protected function returnHeaders(): void
     {
-        header("Content-Type: application/json");
+        header('Content-Type: application/json');
         header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
     }
 
 }
