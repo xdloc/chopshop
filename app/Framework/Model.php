@@ -125,8 +125,7 @@ trait Model
     public function delete(int $id, string $id_column = 'id'): bool
     {
         $data[$id_column] = $id;
-        $query = "delete from $this->table where $id_column = :$id_column ";
-        var_dump($query);
+        $query = "delete from $this->table where $id_column = :$id_column";
         $queryResult = $this->query($query, $data);
         return (bool)$queryResult;
     }
