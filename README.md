@@ -8,6 +8,7 @@ What's done:
 * CI/CD (autodeploy master branches, Github Actions+VPS for backend, Netlify for frontend)
 * Api methods: list, addItem, removeItem, editItem
 * Sentry
+* CORS
 
 
 What's left undone:
