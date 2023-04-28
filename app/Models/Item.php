@@ -25,6 +25,7 @@ class Item
     protected string $table = 'items';
 
     protected array $allowedColumns = [
+        'id',
         'name',
         'status',
         'created_at',
