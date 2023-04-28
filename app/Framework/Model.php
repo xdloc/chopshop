@@ -24,7 +24,6 @@ trait Model
     {
 
         $query = "select * from $this->table order by $this->orderColumn $this->orderType limit $this->limit offset $this->offset";
-
         return $this->query($query);
     }
 
@@ -35,7 +34,7 @@ trait Model
      */
     public function where($data, array $data_not = []): bool|array
     {
-        $query = $this->getStr($data, $data_not);
+        $query = $this->selectFrom($data, $data_not);
 
         $query .= " order by $this->orderColumn $this->orderType limit $this->limit offset $this->offset";
         $data = array_merge($data, $data_not);
@@ -50,7 +49,7 @@ trait Model
      */
     public function first($data, array $data_not = []): mixed
     {
-        $query = $this->getStr($data, $data_not);
+        $query = $this->selectFrom($data, $data_not);
 
         $query .= " limit $this->limit offset $this->offset";
         $data = array_merge($data, $data_not);
@@ -81,9 +80,7 @@ trait Model
         $keys = array_keys($data);
 
         $query = "insert into $this->table (".implode(",", $keys).") values (:".implode(",:", $keys).")";
-        $this->query($query, $data);
-
-        return false;
+        return (bool)$this->query($query, $data);
     }
 
     /**
@@ -111,14 +108,10 @@ trait Model
         }
 
         $query = trim($query, ", ");
-
         $query .= " where $id_column = :$id_column ";
-
         $data[$id_column] = $id;
 
-        $this->query($query, $data);
-        return false;
-
+        return (bool)$this->query($query, $data);
     }
 
     /**
@@ -131,10 +124,7 @@ trait Model
 
         $data[$id_column] = $id;
         $query = "delete from $this->table where $id_column = :$id_column ";
-        $this->query($query, $data);
-
-        return false;
-
+        return (bool)$this->query($query, $data);
     }
 
     /**
@@ -142,7 +132,7 @@ trait Model
      * @param  array  $data_not
      * @return string
      */
-    protected function getStr($data, array $data_not): string
+    protected function selectFrom($data, array $data_not): string
     {
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
