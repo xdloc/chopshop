@@ -50,9 +50,9 @@ class App
         $exitCode = 200;
         try {
             $load = call_user_func_array([$controller, $this->method], $this->getUrl());
-            if ($load === false) {
+            /*if ($load === false) {
                 throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$this->getControllerName());
-            }
+            }*/
         } catch (Exception $exception) {
             $apiException = $this->getApiException($exception);
             $load = $this->getExceptionArray($apiException);
