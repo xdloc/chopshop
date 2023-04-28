@@ -47,6 +47,8 @@ class App
 
         if (!empty($method) && method_exists($controller, $method)) {
             $this->method = $method;
+        } else{
+            throw new MethodNotFoundException('Method '.$method.' not exist');
         }
 
         $exitCode = 200;
