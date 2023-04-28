@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Framework;
 
+use function Sentry\captureException;
+use function Sentry\captureMessage;
+
 /**
  * Trait Model
  * @package App\Framework
@@ -123,7 +126,9 @@ trait Model
     {
         $data[$id_column] = $id;
         $query = "delete from $this->table where $id_column = :$id_column ";
-        return (bool)$this->query($query, $data);
+        $queryResult = $this->query($query, $data);
+        var_dump($queryResult);
+        return (bool)$queryResult;
     }
 
     /**
