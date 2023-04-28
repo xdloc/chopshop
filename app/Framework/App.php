@@ -112,7 +112,7 @@ class App
      */
     protected function getMethod(): mixed
     {
-        return $_POST['method'];
+        return $_GET['method'];
     }
 
 }

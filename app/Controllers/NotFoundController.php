@@ -12,8 +12,8 @@ class NotFoundController
 {
 	use Controller;
 	
-	public function index(): void
+	public function index(): string
     {
-		print '404';
+		return '404';
 	}
 }
