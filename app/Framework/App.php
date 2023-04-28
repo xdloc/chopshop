@@ -101,7 +101,15 @@ class App
     {
         header('Content-Type: application/json', false);
         header('Access-Control-Allow-Origin: *', false); //https://chopshop-app.netlify.app/');
-        header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept,access-control-allow-credentials,access-control-allow-headers,access-control-allow-methods,access-control-allow-origin,vary');
+        header('Access-Control-Allow-Headers: Origin, 
+                                                    X-Requested-With, 
+                                                    Content-Type, 
+                                                    Accept,X-Auth-Token,
+                                                    Authorization, 
+                                                    Access-Control-Allow-Credentials,
+                                                    Access-Control-Allow-Headers,
+                                                    Access-Control-Allow-Methods,
+                                                    Access-Control-Allow-Origin');
         header('Access-Control-Allow-Methods: GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
         header('Access-Control-Allow-Credentials: true');
         header('Vary: Accept-Encoding');
