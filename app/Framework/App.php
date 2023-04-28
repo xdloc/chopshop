@@ -82,6 +82,7 @@ class App
 
         $this->returnHeaders();
         print json_encode($load, JSON_THROW_ON_ERROR);
+        exit();
     }
 
     /**
