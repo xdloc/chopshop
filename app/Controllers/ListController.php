@@ -10,15 +10,15 @@ use App\Models\Item;
 /**
  * Class ListController
  * @package App\Controllers
+ * @api list/
  */
 class ListController
 {
     use Controller;
 
     /**
-     * @api /method?=list/list
-     *
      * @return bool|array
+     * @api /method?=list/list
      */
     public function list(): bool|array
     {
@@ -26,58 +26,49 @@ class ListController
     }
 
     /**
-     * @api /method?=list/add
-     *
-     * @param  int  $listId
      * @param  string  $itemName
      * @return bool
+     * @api /method?=list/add
      */
-    public function add(int $listId, string $itemName): bool
+    public function add(string $itemName): bool
     {
-        //todo check User access here
-        return (new ItemBuilder())->createItem($listId, $itemName);
+        return (new ItemBuilder())->createItem($itemName);
     }
 
     /**
+     * @param  string  $itemId
+     * @return bool
      * @api /method?=list/remove
      *
-     * @param  int  $listId
-     * @param  int  $itemId
-     * @return bool
      */
-    public function remove(int $listId, int $itemId): bool
+    public function remove(string $itemId): bool
     {
-        // todo check User access here
-        return (new Item())->delete($itemId);
+        return (new Item())->delete((int)$itemId);
     }
 
     /**
      * Edit item's name
-     * @api /method?=list/edit
-     *
-     * @param  int  $listId
      * @param  int  $itemId
      * @param  string  $itemName
      * @return bool
+     * @api /method?=list/edit
+     *
      */
-    public function edit(int $listId, int $itemId, string $itemName): bool
+    public function edit(int $itemId, string $itemName): bool
     {
-        // todo check User access here
-        return (new Item())->update($listId, ['name' => $itemName]);
+        return (new Item())->update($itemId, ['name' => $itemName]);
     }
 
     /**
      * Mark as completed or unmark it back
-     * @api /method?=list/mark
-     *
-     * @param  int  $listId
      * @param  int  $itemId
      * @param  int  $status
      * @return bool
+     * @api /method?=list/mark
+     *
      */
-    public function mark(int $listId, int $itemId, int $status): bool
+    public function mark(int $itemId, int $status): bool
     {
-        // todo check User access here
         return (new Item())->update($itemId, ['status' => $status]);
     }
 }

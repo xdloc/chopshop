@@ -7,6 +7,8 @@ use App\Controllers\NotFoundController;
 use App\Exceptions\ApiException;
 use App\Exceptions\MethodNotFoundException;
 use Exception;
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use JsonException;
 
 /**
@@ -128,6 +130,7 @@ class App
      * @param  Exception  $exception
      * @return ApiException
      */
+    #[Pure]
     protected function getApiException(Exception $exception): ApiException
     {
         if (DEBUG) {
@@ -142,6 +145,8 @@ class App
      * @param  Exception  $exception
      * @return array[]
      */
+    #[Pure]
+    #[ArrayShape(['exception' => "array"])]
     protected function getExceptionArray(Exception $exception): array
     {
         return [
