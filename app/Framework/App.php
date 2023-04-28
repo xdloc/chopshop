@@ -49,7 +49,7 @@ class App
 
         $exitCode = 200;
         try {
-            $load = call_user_func_array([$controller, $this->method], $this->parseUrl());
+            $load = call_user_func_array([$controller, $this->method], $this->getParams());
             /*if ($load === false) {
                 throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$this->getControllerName());
             }*/
@@ -154,6 +154,16 @@ class App
                 'trace' => $exception->getTraceAsString()
             ]
         ];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getParams(): array
+    {
+        $params = $this->parseUrl();
+        unset($params[0], $params[1]);
+        return $params;
     }
 }
 
