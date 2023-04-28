@@ -48,27 +48,26 @@ class ListController
 
     /**
      * Edit item's name
-     * @param  int  $itemId
+     * @param  string  $itemId
      * @param  string  $itemName
      * @return bool
      * @api /method?=list/edit
      *
      */
-    public function edit(int $itemId, string $itemName): bool
+    public function edit(string $itemId, string $itemName): bool
     {
-        return (new Item())->update($itemId, ['name' => $itemName]);
+        return (new Item())->update((int)$itemId, ['name' => $itemName]);
     }
 
     /**
      * Mark as completed or unmark it back
-     * @param  int  $itemId
+     * @param  string  $itemId
      * @param  int  $status
      * @return bool
      * @api /method?=list/mark
-     *
      */
-    public function mark(int $itemId, int $status): bool
+    public function mark(string $itemId, int $status): bool
     {
-        return (new Item())->update($itemId, ['status' => $status]);
+        return (new Item())->update((int)$itemId, ['status' => $status]);
     }
 }
