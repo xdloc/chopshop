@@ -100,8 +100,8 @@ class App
     {
         header('Content-Type: application/json');
         header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
-        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+        header('Access-Control-Allow-Headers: *');
+        header('Access-Control-Allow-Methods: *');
         header('Access-Control-Allow-Credentials: true');
     }
 
