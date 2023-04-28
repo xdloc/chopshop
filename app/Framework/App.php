@@ -36,13 +36,6 @@ class App
     public function loadController(): void
     {
         $this->parseUrl();
-
-        if ($this->isControllerExist($this->getControllerName())) {
-            $this->controller = 'App\Controllers\\'.$this->getControllerName();
-        } else {
-            $this->controller = NotFoundController::class;
-        }
-
         $controller = new $this->controller;
 
         if (empty($this->method) || !method_exists($controller, $this->method)) {
@@ -79,13 +72,19 @@ class App
 
         try {
             $this->controller = $this->parsedUri['controller'];
+            if ($this->isControllerExist($this->getControllerName())) {
+                $this->controller = 'App\Controllers\\'.$this->getControllerName();
+            } else {
+                $this->controller = NotFoundController::class;
+            }
         } catch (Exception $exception) {
-            throw new MethodNotFoundException('Controller not set');
+            throw new MethodNotFoundException('Controller not set', 400, $exception);
         }
         try {
             $this->method = $this->parsedUri['method'];
         } catch (Exception $exception) {
-            throw new MethodNotFoundException('Method not set');
+            $this->method = 'index';
+            throw new MethodNotFoundException('Method not set', 400, $exception);
         }
     }
 
