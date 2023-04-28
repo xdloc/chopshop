@@ -26,6 +26,7 @@ class App
      * @var string[]
      */
     private array $url = [];
+    private array $parsedUri = [];
 
     /**
      * @return void
@@ -34,35 +35,30 @@ class App
      */
     public function loadController(): void
     {
-        $controller = $this->getControllerName();
-        $method = $this->getMethodName();
+        $this->parseUrl();
 
-        if ($this->isControllerExist($controller)) {
-            $this->controller = 'App\Controllers\\'.$controller;
+        if ($this->isControllerExist($this->getControllerName())) {
+            $this->controller = 'App\Controllers\\'.$this->getControllerName();
         } else {
             $this->controller = NotFoundController::class;
         }
 
         $controller = new $this->controller;
 
-        if (!empty($method) && method_exists($controller, $method)) {
-            $this->method = $method;
-        } else{
-            throw new MethodNotFoundException('Method '.$method.' not exist');
+        if (empty($this->method) || !method_exists($controller, $this->method)) {
+            throw new MethodNotFoundException('Method '.$this->method.' not exist');
         }
 
         $exitCode = 200;
         try {
-            $reflection = new \ReflectionMethod($controller,$this->method);
+            $reflection = new \ReflectionMethod($controller, $this->method);
             $methodParamsNumber = $reflection->getNumberOfRequiredParameters();
-            if($methodParamsNumber !== count($this->getParams())){
+            if ($methodParamsNumber !== count($this->getParams())) {
                 throw new ArgumentCountError('Wrong argument number for method '.$this->method.' in '.$this->getControllerName());
             }
 
             $load = call_user_func_array([$controller, $this->method], $this->getParams());
-        }
-        catch (Exception $exception) {
-            var_dump($exception);
+        } catch (Exception $exception) {
             $apiException = $this->getApiException($exception);
             $load = $this->getExceptionArray($apiException);
             $exitCode = $apiException->getCode();
@@ -73,13 +69,24 @@ class App
     }
 
     /**
-     * @return string[]
+     * @throws MethodNotFoundException
      */
-    private function parseUrl(): array
+    private function parseUrl(): void
     {
-        $url = $this->getMethod() ?? 'Undefined';
-        $this->url = explode('/', trim($url, '/'));
-        return $this->url;
+        $parsedUri = parse_url($_SERVER['REQUEST_URI']);
+        parse_str($parsedUri['query'], $query);
+        $this->parsedUri = $query;
+
+        try {
+            $this->controller = $this->parsedUri['controller'];
+        } catch (Exception $exception) {
+            throw new MethodNotFoundException('Controller not set');
+        }
+        try {
+            $this->method = $this->parsedUri['method'];
+        } catch (Exception $exception) {
+            throw new MethodNotFoundException('Method not set');
+        }
     }
 
     /**
@@ -87,19 +94,15 @@ class App
      */
     private function getControllerName(): string
     {
-        return ucfirst($this->parseUrl()[0]).'Controller';
+        return ucfirst($this->controller).'Controller';
     }
 
     /**
      * @return string
-     * @throws MethodNotFoundException
      */
     private function getMethodName(): string
     {
-        if (!isset($this->parseUrl()[1])) {
-            throw new MethodNotFoundException('Method "'.$this->parseUrl()[1].'" not found in '.$this->getControllerName(), 404);
-        }
-        return $this->parseUrl()[1];
+        return $this->method;
     }
 
     /**
@@ -122,14 +125,6 @@ class App
         header('Access-Control-Allow-Methods: GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
         header('Access-Control-Allow-Credentials: true');
         header('Vary: Accept-Encoding');
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getMethod(): mixed
-    {
-        return $_GET['method'];
     }
 
     /**
@@ -170,8 +165,8 @@ class App
      */
     protected function getParams(): array
     {
-        $params = $this->parseUrl();
-        unset($params[0], $params[1]);
+        $params = $this->parsedUri;
+        unset($params['method'], $params['controller']);
         return $params;
     }
 }
