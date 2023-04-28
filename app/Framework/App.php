@@ -49,8 +49,7 @@ class App
             if ($methodParamsNumber !== count($this->getParams())) {
                 throw new ArgumentCountError('Wrong argument number for method '.$this->method.' in '.$this->getControllerName());
             }
-
-            $load = call_user_func_array([$controller, $this->method], $this->getParams());
+            $load = call_user_func_array([$controller, $this->method], array_values($this->getParams()));
         } catch (Exception $exception) {
             $apiException = $this->getApiException($exception);
             $load = $this->getExceptionArray($apiException);
