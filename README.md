@@ -1,6 +1,6 @@
 # ChopShop API
 
-What's done:
+## What's done:
 * Plain PHP project, PHP 8.2, MariaDB
 * Some composer packages, composer autoload
 * Models, Controllers, but Views was moved to separate frontend project based on Vue.js, and this app turned to API
@@ -11,7 +11,7 @@ What's done:
 * CORS
 
 
-What's left undone:
+## What's left undone:
 * Api methods: edit, mark
 * Users and user access
 * Main list model
@@ -22,4 +22,16 @@ What's left undone:
 * Docker/K8S
 * Cache
 * CSS Preprocessing
-* More complex structured API (REST e.g.)
+* More complex structured API (REST, JSON-RPC) with auth
+
+## API
+### list/list
+Show all items
+### list/add
+Add new item
+### list/edit
+Edit the item
+### list/mark
+Mark item as checked/unchecked
+### list/remove
+Delete the item
