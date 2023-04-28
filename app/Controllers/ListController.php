@@ -43,7 +43,6 @@ class ListController
      */
     public function remove(string $itemId): bool
     {
-        var_dump($itemId);
         return (new Item())->delete((int)$itemId);
     }
 
