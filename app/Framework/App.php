@@ -34,16 +34,16 @@ class App
      */
     public function loadController(): void
     {
-
         $controller = $this->getControllerName();
+        $method = $this->getMethodName();
+
         if ($this->isControllerExist($controller)) {
-            $this->controller = self::CONTROLLER_NAMESPACE.$controller;
+            $this->controller = self::CONTROLLER_NAMESPACE.$this->getControllerName();
         } else {
             $this->controller = NotFoundController::class;
         }
 
         $controller = new $this->controller;
-        $method = $this->getMethodName();
 
         if (!empty($method) && method_exists($controller, $method)) {
             $this->method = $method;
