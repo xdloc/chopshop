@@ -60,6 +60,7 @@ class App
             $load = call_user_func_array([$controller, $this->method], $this->getParams());
         }
         catch (Exception $exception) {
+            var_dump($exception);
             $apiException = $this->getApiException($exception);
             $load = $this->getExceptionArray($apiException);
             $exitCode = $apiException->getCode();
