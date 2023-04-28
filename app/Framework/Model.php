@@ -84,12 +84,12 @@ trait Model
     }
 
     /**
-     * @param $id
-     * @param $data
+     * @param  int  $id
+     * @param  array  $data
      * @param  string  $id_column
      * @return bool
      */
-    public function update($id, $data, string $id_column = 'id'): bool
+    public function update(int $id, array $data, string $id_column = 'id'): bool
     {
         if (!empty($this->allowedColumns)) {
             foreach ($data as $key => $value) {
@@ -115,13 +115,12 @@ trait Model
     }
 
     /**
-     * @param $id
+     * @param  int  $id
      * @param  string  $id_column
      * @return bool
      */
-    public function delete($id, string $id_column = 'id'): bool
+    public function delete(int $id, string $id_column = 'id'): bool
     {
-
         $data[$id_column] = $id;
         $query = "delete from $this->table where $id_column = :$id_column ";
         return (bool)$this->query($query, $data);
