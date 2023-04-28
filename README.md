@@ -6,13 +6,13 @@ What's done:
 * Models, Controllers, but Views was moved to separate frontend project based on Vue.js, and this app turned to API
 * https://chopshop-app.netlify.app
 * CI/CD (autodeploy master branches, Github Actions+VPS for backend, Netlify for frontend)
-* Api methods: list
+* Api methods: list, add
 * Sentry
 * CORS
 
 
 What's left undone:
-* Api methods: addItem, removeItem, editItem
+* Api methods: remove, edit, mark
 * Users and user access
 * Main list model
 * .env
@@ -22,3 +22,4 @@ What's left undone:
 * Docker/K8S
 * Cache
 * CSS Preprocessing
+* More complex structured API (REST e.g.)

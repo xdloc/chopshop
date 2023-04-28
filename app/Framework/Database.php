@@ -27,7 +27,6 @@ trait Database
      */
     public function query($query, array $data = []): bool|array
     {
-
         $con = $this->connect();
         $stm = $con->prepare($query);
 

@@ -49,7 +49,7 @@ class App
 
         $exitCode = 200;
         try {
-            $load = call_user_func_array([$controller, $this->method], $this->getUrl());
+            $load = call_user_func_array([$controller, $this->method], $this->parseUrl());
             /*if ($load === false) {
                 throw new MethodNotFoundException('Method "'.$this->method.'" not found in '.$this->getControllerName());
             }*/
@@ -66,11 +66,8 @@ class App
     /**
      * @return string[]
      */
-    private function getUrl(): array
+    private function parseUrl(): array
     {
-        if (!empty($this->url)) {
-            return $this->url;
-        }
         $url = $this->getMethod() ?? 'Undefined';
         $this->url = explode('/', trim($url, '/'));
         return $this->url;
@@ -81,7 +78,7 @@ class App
      */
     private function getControllerName(): string
     {
-        return ucfirst($this->getUrl()[0]).'Controller';
+        return ucfirst($this->parseUrl()[0]).'Controller';
     }
 
     /**
@@ -90,10 +87,10 @@ class App
      */
     private function getMethodName(): string
     {
-        if (!isset($this->getUrl()[1])) {
-            throw new MethodNotFoundException('Method "'.$this->getUrl()[1].'" not found in '.$this->getControllerName(), 404);
+        if (!isset($this->parseUrl()[1])) {
+            throw new MethodNotFoundException('Method "'.$this->parseUrl()[1].'" not found in '.$this->getControllerName(), 404);
         }
-        return $this->getUrl()[1];
+        return $this->parseUrl()[1];
     }
 
     /**
