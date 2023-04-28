@@ -28,7 +28,7 @@ class App
         if (!empty($this->url)) {
             return $this->url;
         }
-        $url = $_GET['method'] ?? 'Undefined';
+        $url = $this->getMethod() ?? 'Undefined';
         $this->url = explode('/', trim($url, '/'));
         return $this->url;
     }
@@ -105,6 +105,14 @@ class App
         header('Access-Control-Allow-Methods: GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
         header('Access-Control-Allow-Credentials: true');
         header('Vary: Accept-Encoding');
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getMethod(): mixed
+    {
+        return $_POST['method'];
     }
 
 }
