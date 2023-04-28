@@ -99,7 +99,7 @@ class App
     protected function returnHeaders(): void
     {
         header('Content-Type: application/json');
-        header('Access-Control-Allow-Origin: https://chopshop-app.netlify.app');
+        header('Access-Control-Allow-Origin: https://chopshop-app.netlify.app/');
         header('Access-Control-Allow-Headers: *');
         header('Access-Control-Allow-Methods: *');
         header('Access-Control-Allow-Credentials: true');
